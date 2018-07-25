@@ -16,11 +16,13 @@ public class Controller {
 	
 	@Autowired
 	private  RabbitTemplate rabbitTemplate;
+	
+	@Autowired 
+	private RestTemplate restTemplate;
 
 	@RequestMapping("/")
 	@ResponseBody
-	public String test() {
-		RestTemplate restTemplate = new RestTemplate();
+	public String test() {	
 		String result = restTemplate.getForObject(Constants.API_ADDRESS,String.class);
 		rabbitTemplate.convertAndSend(Application.gettopicExchangeName(), "foo.bar.baz", result);
 		return result;
