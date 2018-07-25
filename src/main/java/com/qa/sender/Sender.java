@@ -13,7 +13,7 @@ public class Sender {
 	@Autowired
 	private  RabbitTemplate rabbitTemplate;
 	
-	public void send(String msg) {
-		rabbitTemplate.convertAndSend(Constants.TOPIC_EXCHANGE_NAME, "foo.bar.baz", msg);
+	public void send(String msg, String key) {
+		rabbitTemplate.convertAndSend(Constants.TOPIC_EXCHANGE_NAME, key, msg);
 	}
 }

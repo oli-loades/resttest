@@ -22,16 +22,23 @@ public class Application {
 	private static final String topicExchangeName = Constants.TOPIC_EXCHANGE_NAME;
 	
 	private static final String queueName = Constants.QUEUE_NAME;
-	
+	*/
 	
 	private static final String topicExchangeName = "spring-boot-exchange";
 
-	private static final String queueName = "spring-boot";
-*/
+	private static final String queueGet = "get";
+	
+	private static final String queuePost = "post";
+
 	
 	@Bean
-	Queue queue() {
-		return new Queue(Constants.QUEUE_NAME, false);
+	Queue queueGetRequest() {
+		return new Queue(queueGet, false);
+	}
+	
+	@Bean
+	Queue queuePostRequest() {
+		return new Queue(queuePost, false);
 	}
 
 	@Bean
@@ -40,8 +47,13 @@ public class Application {
 	}
 
 	@Bean
-	Binding binding(Queue queue, TopicExchange exchange) {
-		return BindingBuilder.bind(queue).to(exchange).with("foo.bar.#");
+	Binding binding1(Queue queueGetRequest, TopicExchange exchange) {
+		return BindingBuilder.bind(queueGetRequest).to(exchange).with("get");
+	}
+	
+	@Bean
+	Binding binding2(Queue queuePostRequest, TopicExchange exchange) {
+		return BindingBuilder.bind(queuePostRequest).to(exchange).with("post");
 	}
 	
 	@Bean
@@ -58,15 +70,7 @@ public class Application {
 	TrainerService trainerService() {
 		return new TrainerService();
 	}
-	/*
-	public static String gettopicExchangeName() {
-		return topicExchangeName;
-	}
-	
-	public static String getqueueName() {
-		return queueName;
-	}
-	*/
+
 	public static void main(String args[]) {
 		SpringApplication.run(Application.class);
 	}

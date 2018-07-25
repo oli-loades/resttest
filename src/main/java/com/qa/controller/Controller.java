@@ -27,7 +27,15 @@ public class Controller {
 	@ResponseBody
 	public String test() {	
 		String result = trainerService.getAllTrainers();
-		sender.send(result);;
+		sender.send(result,"get");;
+		return result;
+	}
+	
+	@GetMapping("/test2")
+	@ResponseBody
+	public String test2() {	
+		String result = trainerService.getAllTrainers();
+		sender.send(result,"post");;
 		return result;
 	}
 }
